@@ -1,13 +1,61 @@
+
+# Android Studio
 *.iml
+
 .gradle
+.gradle/
+
+#USER SPECIFIC CONFIG
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+.idea
+/.idea
+*/.idea
+.idea/*
+
+#OS SPECIFIC FILES
 .DS_Store
+.DS_Store?
 /build
 /captures
+.externalNativeBuild
+
+/*/build
+#built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+
+
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+
+build/
+build
+.navigation
+captures/
+output.json 
+gradle.properties
+gradle/
+gradlew
+gradlew.bat
+
+#NDK
+obj/
 .externalNativeBuild

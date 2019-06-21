@@ -2,15 +2,13 @@ package com.example.travelmantics;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.ContentFrameLayout;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,13 +25,12 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
     public DealAdapter() {
-        FirebaseUtil.openFbReference("traveldeals");
         firebaseDatabase = FirebaseUtil.firebaseDatabase;
         databaseReference = FirebaseUtil.databaseReference;
         deals = FirebaseUtil.deals;
         childEventListener = new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 TravelDeal td = dataSnapshot.getValue(TravelDeal.class);
                 Log.d("Deals: ",td.getTitle());
                 td.setId(dataSnapshot.getKey());
@@ -42,31 +39,30 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled( DatabaseError databaseError) {
 
             }
         };
         databaseReference.addChildEventListener(childEventListener);
     }
 
-    @NonNull
     @Override
-    public DealViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public DealViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
         View itemView = LayoutInflater.from(context)
                 .inflate(R.layout.rv_row, viewGroup, false);
@@ -74,7 +70,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DealViewHolder dealViewHolder, int pos) {
+    public void onBindViewHolder(DealViewHolder dealViewHolder, int pos) {
         TravelDeal deal = deals.get(pos);
         dealViewHolder.bind(deal);
     }
@@ -90,7 +86,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         TextView tvDescription;
         TextView tvPrice;
 
-        public DealViewHolder(@NonNull View itemView) {
+        public DealViewHolder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvDescription = itemView.findViewById(R.id.tvDescription);
