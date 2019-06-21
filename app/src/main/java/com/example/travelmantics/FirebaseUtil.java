@@ -1,12 +1,8 @@
 package com.example.travelmantics;
-
-import android.app.Activity;
-
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import android.widget.Toast;
+
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,6 +11,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +23,14 @@ public class FirebaseUtil {
     public static DatabaseReference databaseReference;
     private  static FirebaseUtil firebaseUtil;
     public static FirebaseAuth firebaseAuth;
+    public static FirebaseStorage firebaseStorage;
+    public static StorageReference storageReference;
     public static FirebaseAuth.AuthStateListener authStateListener;
     public static ArrayList<TravelDeal> deals;
     private static final int RC_SIGN_IN = 123;
     private static ListActivity caller;
-    private FirebaseUtil() {};
+    private FirebaseUtil() {}
+
     public static boolean isAdmin;
 
     public static void openFbReference(String ref, final ListActivity callerActivity) {
@@ -51,6 +52,7 @@ public class FirebaseUtil {
                             Toast.LENGTH_LONG).show();
                 }
             };
+            connectStorage();
         }
         deals = new ArrayList<TravelDeal>();
         databaseReference = firebaseDatabase.getReference().child(ref);
@@ -62,13 +64,13 @@ public class FirebaseUtil {
                 .child(userId);
         ChildEventListener listener = new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseUtil.isAdmin = true;
                 caller.showMenu();
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildChanged(DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
@@ -109,6 +111,11 @@ public class FirebaseUtil {
 
     public static void detachListener() {
         firebaseAuth.removeAuthStateListener(authStateListener);
+    }
+
+    public static void connectStorage(){
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference().child("deals_pictures");
     }
 
 }
